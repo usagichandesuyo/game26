@@ -79,6 +79,7 @@ let answerTimeout;
 let countdownInterval;
 
 let remainingTime = 3;
+let answerTimeLimit = 3;
 
 let speed = 5;
 let selectedWords = easyWords;
@@ -126,25 +127,34 @@ function startGame(level) {
   gameOver = false;
 
   if (level === "easy") {
+
     selectedWords = easyWords;
     speed = 4;
+    answerTimeLimit = 7;
+
   }
 
   if (level === "normal") {
+
     selectedWords = normalWords;
     speed = 7;
+    answerTimeLimit = 6;
+
   }
 
   if (level === "hard") {
+
     selectedWords = hardWords;
     speed = 10;
+    answerTimeLimit = 5;
+
   }
 
   score = 0;
   combo = 0;
   life = 3;
 
-  remainingTime = 3;
+  remainingTime = answerTimeLimit;
 
   updateUI();
 
@@ -177,7 +187,7 @@ function startRound() {
 
   let position = -200;
 
-  remainingTime = 3;
+  remainingTime = answerTimeLimit;
 
   updateUI();
 
@@ -210,7 +220,7 @@ function startRound() {
 
         miss();
 
-      }, 3000);
+      }, answerTimeLimit * 1000);
 
     }
 
