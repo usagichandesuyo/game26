@@ -2,26 +2,23 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>新幹線ワードゲーム</title>
+  <title>新幹線ワード当てゲーム</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <h1>🚄 新幹線ワードゲーム</h1>
+  <h1>新幹線ワード当てゲーム</h1>
 
-  <div class="info">
-    <p>❤️ ライフ: <span id="life">3</span></p>
-    <p>🔥 コンボ: <span id="combo">0</span></p>
-    <p>⭐ スコア: <span id="score">0</span></p>
+  <div id="game-area">
+    <div id="train">こんにちは</div>
   </div>
 
-  <div id="gameArea">
-    <div id="train">りんご</div>
-  </div>
+  <input type="text" id="answer" placeholder="答えを入力">
+  <button onclick="checkAnswer()">決定</button>
 
-  <input type="text" id="answer" placeholder="単語を入力">
-  <button id="submitBtn">決定</button>
+  <p>ライフ: <span id="life">3</span></p>
+  <p>連続正解: <span id="combo">0</span></p>
+  <p>スコア: <span id="score">0</span></p>
 
   <script src="script.js"></script>
 </body>
