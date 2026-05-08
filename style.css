@@ -16,6 +16,7 @@ h1 {
   gap: 30px;
   margin-bottom: 20px;
   font-size: 24px;
+  flex-wrap: wrap;
 }
 
 #gameArea {
@@ -30,7 +31,6 @@ h1 {
   overflow: hidden;
 }
 
-/* これ重要 */
 #train {
   position: absolute;
   top: 80px;
@@ -71,4 +71,5 @@ input {
 button {
   padding: 10px 20px;
   font-size: 20px;
+  cursor: pointer;
 }
