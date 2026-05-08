@@ -4,24 +4,50 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>新幹線ワードゲーム</title>
+
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
   <h1>🚄 新幹線ワードゲーム</h1>
 
   <div class="info">
-    <p>❤️ ライフ: <span id="life">3</span></p>
-    <p>🔥 コンボ: <span id="combo">0</span></p>
-    <p>⭐ スコア: <span id="score">0</span></p>
+
+    <p>
+      ❤️ ライフ:
+      <span id="life">3</span>
+    </p>
+
+    <p>
+      🔥 コンボ:
+      <span id="combo">0</span>
+    </p>
+
+    <p>
+      ⭐ スコア:
+      <span id="score">0</span>
+    </p>
+
+    <p>
+      ⏰ 残り時間:
+      <span id="timer">3</span>
+    </p>
+
   </div>
 
-  <!-- ここ重要 -->
   <div id="gameArea">
   </div>
 
-  <input type="text" id="answer" placeholder="単語を入力">
-  <button id="submitBtn">決定</button>
+  <input
+    type="text"
+    id="answer"
+    placeholder="単語を入力"
+  >
+
+  <button id="submitBtn">
+    決定
+  </button>
 
   <script src="script.js"></script>
 
