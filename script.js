@@ -20,72 +20,38 @@ const words = [
 ];
 
 const train = document.getElementById("train");
-const answerInput = document.getElementById("answer");
-const submitBtn = document.getElementById("submitBtn");
-
-let currentWord = "";
-let position = -300;
-let speed = 6;
-let moveInterval;
-
-let life = 3;
-let combo = 0;
-let score = 0;
-
-function updateUI() {
-  document.getElementById("life").textContent = life;
-  document.getElementById("combo").textContent = combo;
-  document.getElementById("score").textContent = score;
 }
 
-function getRandomWord() {
-  return words[Math.floor(Math.random() * words.length)];
-}
+function checkAnswer() {
 
-function startRound() {
+  if (gameOver) return;
 
-  clearInterval(moveInterval);
+  const userAnswer = answerInput.value.trim();
 
-  currentWord = getRandomWord();
-  train.textContent = currentWord;
-
-  position = -300;
-  train.style.left = position + "px";
-
-  moveInterval = setInterval(() => {
-
-    position += speed;
-    train.style.left = position + "px";
-
-    if (position > window.innerWidth) {
-      clearInterval(moveInterval);
-      miss();
-    }
-
-  }, 20);
-}
-
-
-function correct() {
-
-  clearInterval(moveInterval);
-
-  score++;
-  combo++;
-
-  if (combo >= 10) {
-    life++;
-    combo = 0;
-    alert("10コンボ達成！ ライフ回復！");
+  if (userAnswer === currentWord) {
+    correct();
+  } else {
+    miss();
   }
 
-  if (score >= 20) {
-    alert("🎉 ゲームクリア！");
-    return;
+  answerInput.value = "";
+}
+
+submitBtn.addEventListener("click", checkAnswer);
+
+answerInput.addEventListener("keydown", (event) => {
+  if (event.key === "Enter") {
+    checkAnswer();
+  }
+});
+
+window.addEventListener("keydown", (event) => {
+
+  if (gameOver && event.code === "Space") {
+    createStartScreen();
   }
 
-  updateUI();
-  startRound();
+});
 }
 
 function miss() {
@@ -127,3 +93,4 @@ answerInput.addEventListener("keydown", (event) => {
 
 updateUI();
 startRound();
+
