@@ -21,48 +21,92 @@ const hardWords = [
   "こんぴゅーたー",
   "てくのろじー"
 ];
-let train = document.getElementById("train");
-const answerInput = document.getElementById("answer");
-const submitBtn = document.getElementById("submitBtn");
-const gameArea = document.getElementById("gameArea");
 
-let currentWord = "";
-let position = -300;
-let speed = 5;
-let moveInterval;
-let answerTimeout;
 
-let life = 3;
-let combo = 0;
-let score = 0;
-let gameOver = false;
+  train = document.getElementById("train");
 
-let selectedWords = easyWords;
-
-createStartScreen();
-
-function createStartScreen() {
-
-  gameArea.innerHTML = `
-    <div id="startScreen">
-      <h2>難易度を選択</h2>
-      <button onclick="startGame('easy')">Easy</button>
-      <button onclick="startGame('normal')">Normal</button>
-      <button onclick="startGame('hard')">Hard</button>
-    </div>
-  `;
-}
-
-function startGame(level) {
-
-  if (level === "easy") {
-    selectedWords = easyWords;
-    speed = 4;
+  if (!train) {
+    gameArea.innerHTML = `<div id="train"></div>`;
+    train = document.getElementById("train");
   }
 
-  if (level === "normal") {
-    selectedWords = normalWords;
-    speed = 6;
+  train.textContent = currentWord;
+
+  position = -300;
+  train.style.left = position + "px";
+
+  moveInterval = setInterval(() => {
+
+    position += speed;
+    train.style.left = position + "px";
+
+    if (position > window.innerWidth) {
+
+      clearInterval(moveInterval);
+
+      answerTimeout = setTimeout(() => {
+        miss();
+      }, 3000);
+    }
+
+  }, 20);
+}
+
+
+function correct() {
+
+  clearInterval(moveInterval);
+  clearTimeout(answerTimeout);
+
+  score++;
+  combo++;
+
+  if (combo >= 10) {
+    combo = 0;
+    life++;
+    alert("ライフ回復！");
+  }
+
+  if (score >= 20) {
+    alert("ゲームクリア！");
+    createStartScreen();
+    return;
+  }
+
+  updateUI();
+  startRound();
+}
+
+function miss() {
+
+  if (gameOver) return;
+
+  combo = 0;
+  life--;
+
+  updateUI();
+
+  if (life <= 0) {
+
+    gameOver = true;
+
+    clearInterval(moveInterval);
+    clearTimeout(answerTimeout);
+
+    gameArea.innerHTML = `
+      <div id="gameOverScreen">
+        <h2>ゲームオーバー</h2>
+        <p>スペースキーで再スタート</p>
+      </div>
+    `;
+
+    return;
+  }
+
+  startRound();
+}
+
+function checkAnswer() {
 
   if (gameOver) return;
 
