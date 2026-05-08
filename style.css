@@ -23,18 +23,24 @@ h1 {
   width: 90%;
   max-width: 1000px;
   height: 250px;
+
   margin: auto;
+
   background: white;
+
   border: 5px solid black;
   border-radius: 20px;
+
   position: relative;
+
   overflow: hidden;
 }
 
 #train {
   position: absolute;
+
   top: 80px;
-  left: -300px;
+  left: -200px;
 
   background: #0080ff;
   color: white;
@@ -56,14 +62,20 @@ h1 {
 
 #startScreen button {
   margin: 10px;
+
   padding: 15px 30px;
+
   font-size: 24px;
+
   cursor: pointer;
 }
 
 input {
   margin-top: 20px;
+
   padding: 10px;
+
   font-size: 24px;
+
   width: 350px;
 }
