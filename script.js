@@ -17,27 +17,109 @@ const normalWords = [
 const hardWords = [
   "ぷろぐらみんぐ",
   "あーてぃふぃしゃる",
-  "でぃーぷらーにんぐ",
-  "こんぴゅーたー",
-  "てくのろじー"
+  "でぃーぷらーにんぐ"
 ];
 
+const answerInput = document.getElementById("answer");
+const submitBtn = document.getElementById("submitBtn");
+const gameArea = document.getElementById("gameArea");
+
+let currentWord = "";
+let train;
+let moveInterval;
+let answerTimeout;
+
+let speed = 5;
+let selectedWords = easyWords;
+
+let score = 0;
+let combo = 0;
+let life = 3;
+
+let gameOver = false;
+
+function updateUI() {
+  document.getElementById("score").textContent = score;
+  document.getElementById("combo").textContent = combo;
+  document.getElementById("life").textContent = life;
+}
+
+function createStartScreen() {
+
+  gameArea.innerHTML = `
+    <div id="startScreen">
+      <h2>難易度を選択</h2>
+
+      <button onclick="startGame('easy')">
+        Easy
+      </button>
+
+      <button onclick="startGame('normal')">
+        Normal
+      </button>
+
+      <button onclick="startGame('hard')">
+        Hard
+      </button>
+    </div>
+  `;
+}
+
+function startGame(level) {
+
+  gameOver = false;
+
+  if (level === "easy") {
+    selectedWords = easyWords;
+    speed = 4;
+  }
+
+  if (level === "normal") {
+    selectedWords = normalWords;
+    speed = 7;
+  }
+
+  if (level === "hard") {
+    selectedWords = hardWords;
+    speed = 10;
+  }
+
+  score = 0;
+  combo = 0;
+  life = 3;
+
+  updateUI();
+
+  gameArea.innerHTML = `
+    <div id="train"></div>
+  `;
 
   train = document.getElementById("train");
 
-  if (!train) {
-    gameArea.innerHTML = `<div id="train"></div>`;
-    train = document.getElementById("train");
-  }
+  startRound();
+}
+
+function getRandomWord() {
+  return selectedWords[
+    Math.floor(Math.random() * selectedWords.length)
+  ];
+}
+
+function startRound() {
+
+  clearInterval(moveInterval);
+  clearTimeout(answerTimeout);
+
+  currentWord = getRandomWord();
 
   train.textContent = currentWord;
 
-  position = -300;
-  train.style.left = position + "px";
+  let position = -300;
 
   moveInterval = setInterval(() => {
 
     position += speed;
+
     train.style.left = position + "px";
 
     if (position > window.innerWidth) {
@@ -51,7 +133,6 @@ const hardWords = [
 
   }, 20);
 }
-
 
 function correct() {
 
@@ -67,13 +148,14 @@ function correct() {
     alert("ライフ回復！");
   }
 
+  updateUI();
+
   if (score >= 20) {
     alert("ゲームクリア！");
     createStartScreen();
     return;
   }
 
-  updateUI();
   startRound();
 }
 
@@ -90,12 +172,9 @@ function miss() {
 
     gameOver = true;
 
-    clearInterval(moveInterval);
-    clearTimeout(answerTimeout);
-
     gameArea.innerHTML = `
       <div id="gameOverScreen">
-        <h2>ゲームオーバー</h2>
+        <h1>ゲームオーバー</h1>
         <p>スペースキーで再スタート</p>
       </div>
     `;
@@ -123,57 +202,20 @@ function checkAnswer() {
 
 submitBtn.addEventListener("click", checkAnswer);
 
-answerInput.addEventListener("keydown", (event) => {
-  if (event.key === "Enter") {
+answerInput.addEventListener("keydown", (e) => {
+
+  if (e.key === "Enter") {
     checkAnswer();
   }
+
 });
 
-window.addEventListener("keydown", (event) => {
+window.addEventListener("keydown", (e) => {
 
-  if (gameOver && event.code === "Space") {
+  if (gameOver && e.code === "Space") {
     createStartScreen();
   }
 
 });
-}
 
-function miss() {
-
-  combo = 0;
-  life--;
-
-  updateUI();
-
-  if (life <= 0) {
-    alert("💀 ゲームオーバー");
-    clearInterval(moveInterval);
-    return;
-  }
-
-  startRound();
-}
-
-function checkAnswer() {
-
-  const userAnswer = answerInput.value.trim();
-
-  if (userAnswer === currentWord) {
-    correct();
-  } else {
-    miss();
-  }
-
-  answerInput.value = "";
-}
-
-submitBtn.addEventListener("click", checkAnswer);
-
-answerInput.addEventListener("keydown", (event) => {
-  if (event.key === "Enter") {
-    checkAnswer();
-  }
-});
-
-updateUI();
-startRound();
+createStartScreen();
