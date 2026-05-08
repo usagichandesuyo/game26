@@ -30,7 +30,8 @@ const normalWords = [
   "パソコン",
   "ゲーム",
   "とうきょう",
-  "きょうと","しながわ",
+  "きょうと",
+  "しながわ",
   "にしこやま",
   "しんおおさか",
   "まいはま",
@@ -43,7 +44,7 @@ const normalWords = [
   "いけぶくろ",
   "にしにっぽり",
   "かわさき",
-  "鶴見",
+  "つるみ",
   "おおひと",
   "あかさか"
 ];
@@ -67,7 +68,6 @@ const hardWords = [
 ];
 
 const answerInput = document.getElementById("answer");
-const submitBtn = document.getElementById("submitBtn");
 const gameArea = document.getElementById("gameArea");
 
 let train;
@@ -144,6 +144,8 @@ function startGame(level) {
   combo = 0;
   life = 3;
 
+  remainingTime = 3;
+
   updateUI();
 
   gameArea.innerHTML = `
@@ -179,15 +181,20 @@ function startRound() {
 
   updateUI();
 
+  let timerStarted = false;
+
   moveInterval = setInterval(() => {
 
     position += speed;
 
     train.style.left = position + "px";
 
-    if (position > window.innerWidth) {
+    if (
+      position > gameArea.clientWidth &&
+      !timerStarted
+    ) {
 
-      clearInterval(moveInterval);
+      timerStarted = true;
 
       countdownInterval = setInterval(() => {
 
@@ -239,6 +246,8 @@ function correct() {
     return;
   }
 
+  answerInput.value = "";
+
   startRound();
 }
 
@@ -276,7 +285,7 @@ function miss() {
   startRound();
 }
 
-function checkAnswer() {
+answerInput.addEventListener("input", () => {
 
   if (gameOver) return;
 
@@ -285,23 +294,6 @@ function checkAnswer() {
   if (userAnswer === currentWord) {
 
     correct();
-
-  } else {
-
-    miss();
-
-  }
-
-  answerInput.value = "";
-}
-
-submitBtn.addEventListener("click", checkAnswer);
-
-answerInput.addEventListener("keydown", (e) => {
-
-  if (e.key === "Enter") {
-
-    checkAnswer();
 
   }
 
