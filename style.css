@@ -1,0 +1,66 @@
+body {
+  margin: 0;
+  padding: 20px;
+  text-align: center;
+  font-family: sans-serif;
+  background: linear-gradient(to bottom, #87ceeb, #ffffff);
+}
+
+h1 {
+  color: #003366;
+}
+
+.info {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  font-size: 20px;
+  margin-bottom: 20px;
+}
+
+#gameArea {
+  width: 100%;
+  max-width: 900px;
+  height: 220px;
+  margin: auto;
+  border: 4px solid #333;
+  background: white;
+  position: relative;
+  overflow: hidden;
+  border-radius: 15px;
+}
+
+#train {
+  position: absolute;
+  top: 70px;
+  left: -300px;
+  background: #0080ff;
+  color: white;
+  font-size: 36px;
+  padding: 20px 40px;
+  border-radius: 12px;
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+input {
+  margin-top: 20px;
+  padding: 12px;
+  font-size: 18px;
+  width: 250px;
+}
+
+button {
+  padding: 12px 20px;
+  font-size: 18px;
+  cursor: pointer;
+  margin-left: 10px;
+  background: #0080ff;
+  color: white;
+  border: none;
+  border-radius: 10px;
+}
+
+button:hover {
+  background: #005fcc;
+}
