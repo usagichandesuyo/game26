@@ -30,17 +30,23 @@ h1 {
   overflow: hidden;
 }
 
+/* これ重要 */
 #train {
   position: absolute;
-  top: 90px;
+  top: 80px;
   left: -300px;
+
   background: #0080ff;
   color: white;
+
   font-size: 40px;
-  padding: 20px 40px;
-  border-radius: 15px;
-  white-space: nowrap;
   font-weight: bold;
+
+  padding: 20px 40px;
+
+  border-radius: 15px;
+
+  white-space: nowrap;
 }
 
 #startScreen,
