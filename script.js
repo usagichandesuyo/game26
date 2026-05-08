@@ -175,7 +175,7 @@ function startRound() {
 
   train.textContent = currentWord;
 
-  let position = -300;
+  let position = -200;
 
   remainingTime = 3;
 
@@ -229,6 +229,7 @@ function correct() {
   if (combo >= 10) {
 
     combo = 0;
+
     life++;
 
     alert("ライフ回復！");
@@ -281,6 +282,8 @@ function miss() {
 
     return;
   }
+
+  answerInput.value = "";
 
   startRound();
 }
