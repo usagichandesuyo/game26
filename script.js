@@ -1,28 +1,68 @@
-const words = [
+const easyWords = [
   "りんご",
   "みかん",
-  "さくら",
-  "しんかんせん",
-  "ゲーム",
-  "パソコン",
-  "すいか",
-  "とうきょう",
-  "きょうと",
   "ねこ",
-  "吹奏楽",
-  "臨海高速鉄道",
-  "北陸新幹線",
-  "山手線",
-  "超特急",
-  "トンチキランド",
-  "物理学概論",
-  "論理回路論",
+  "いぬ",
+  "さくら"
 ];
 
-const train = document.getElementById("train");
+const normalWords = [
+  "しんかんせん",
+  "パソコン",
+  "ゲーム",
+  "とうきょう",
+  "きょうと"
+];
+
+const hardWords = [
+  "ぷろぐらみんぐ",
+  "あーてぃふぃしゃる",
+  "でぃーぷらーにんぐ",
+  "こんぴゅーたー",
+  "てくのろじー"
+];
+let train = document.getElementById("train");
+const answerInput = document.getElementById("answer");
+const submitBtn = document.getElementById("submitBtn");
+const gameArea = document.getElementById("gameArea");
+
+let currentWord = "";
+let position = -300;
+let speed = 5;
+let moveInterval;
+let answerTimeout;
+
+let life = 3;
+let combo = 0;
+let score = 0;
+let gameOver = false;
+
+let selectedWords = easyWords;
+
+createStartScreen();
+
+function createStartScreen() {
+
+  gameArea.innerHTML = `
+    <div id="startScreen">
+      <h2>難易度を選択</h2>
+      <button onclick="startGame('easy')">Easy</button>
+      <button onclick="startGame('normal')">Normal</button>
+      <button onclick="startGame('hard')">Hard</button>
+    </div>
+  `;
 }
 
-function checkAnswer() {
+function startGame(level) {
+
+  if (level === "easy") {
+    selectedWords = easyWords;
+    speed = 4;
+  }
+
+  if (level === "normal") {
+    selectedWords = normalWords;
+    speed = 6;
 
   if (gameOver) return;
 
@@ -93,4 +133,3 @@ answerInput.addEventListener("keydown", (event) => {
 
 updateUI();
 startRound();
-
