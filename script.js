@@ -3,7 +3,26 @@ const easyWords = [
   "みかん",
   "ねこ",
   "いぬ",
-  "さくら"
+  "さくら",
+  "あいす",
+  "ねむい",
+  "めぐろ",
+  "めじろ",
+  "ひよし",
+  "やいず",
+  "いるか",
+  "かかが",
+  "たばた",
+  "しぶや",
+  "えびす",
+  "よよぎ",
+  "すがも",
+  "かんだ",
+  "はる",
+  "なつ",
+  "あき",
+  "ふゆ",
+  "すいか"
 ];
 
 const normalWords = [
@@ -11,23 +30,55 @@ const normalWords = [
   "パソコン",
   "ゲーム",
   "とうきょう",
-  "きょうと"
+  "きょうと","しながわ",
+  "にしこやま",
+  "しんおおさか",
+  "まいはま",
+  "てんもんがく",
+  "かしわぎ",
+  "しんしずおか",
+  "はままつ",
+  "おおさき",
+  "ごたんだ",
+  "いけぶくろ",
+  "にしにっぽり",
+  "かわさき",
+  "鶴見",
+  "おおひと",
+  "あかさか"
 ];
 
 const hardWords = [
-  "ぷろぐらみんぐ",
-  "あーてぃふぃしゃる",
-  "でぃーぷらーにんぐ"
+  "プログラミング",
+  "論理回路論",
+  "雑司ヶ谷",
+  "新横浜",
+  "新綱島",
+  "元住吉",
+  "武蔵小杉",
+  "代官山",
+  "海浜幕張",
+  "秋葉原",
+  "新潟",
+  "ソフトウェア",
+  "葉緑体",
+  "田町",
+  "中目黒"
 ];
 
 const answerInput = document.getElementById("answer");
 const submitBtn = document.getElementById("submitBtn");
 const gameArea = document.getElementById("gameArea");
 
-let currentWord = "";
 let train;
+
+let currentWord = "";
+
 let moveInterval;
 let answerTimeout;
+let countdownInterval;
+
+let remainingTime = 3;
 
 let speed = 5;
 let selectedWords = easyWords;
@@ -39,15 +90,19 @@ let life = 3;
 let gameOver = false;
 
 function updateUI() {
+
   document.getElementById("score").textContent = score;
   document.getElementById("combo").textContent = combo;
   document.getElementById("life").textContent = life;
+  document.getElementById("timer").textContent = remainingTime;
+
 }
 
 function createStartScreen() {
 
   gameArea.innerHTML = `
     <div id="startScreen">
+
       <h2>難易度を選択</h2>
 
       <button onclick="startGame('easy')">
@@ -61,6 +116,7 @@ function createStartScreen() {
       <button onclick="startGame('hard')">
         Hard
       </button>
+
     </div>
   `;
 }
@@ -100,21 +156,28 @@ function startGame(level) {
 }
 
 function getRandomWord() {
+
   return selectedWords[
     Math.floor(Math.random() * selectedWords.length)
   ];
+
 }
 
 function startRound() {
 
   clearInterval(moveInterval);
   clearTimeout(answerTimeout);
+  clearInterval(countdownInterval);
 
   currentWord = getRandomWord();
 
   train.textContent = currentWord;
 
   let position = -300;
+
+  remainingTime = 3;
+
+  updateUI();
 
   moveInterval = setInterval(() => {
 
@@ -126,9 +189,22 @@ function startRound() {
 
       clearInterval(moveInterval);
 
+      countdownInterval = setInterval(() => {
+
+        remainingTime--;
+
+        updateUI();
+
+      }, 1000);
+
       answerTimeout = setTimeout(() => {
+
+        clearInterval(countdownInterval);
+
         miss();
+
       }, 3000);
+
     }
 
   }, 20);
@@ -138,21 +214,28 @@ function correct() {
 
   clearInterval(moveInterval);
   clearTimeout(answerTimeout);
+  clearInterval(countdownInterval);
 
   score++;
   combo++;
 
   if (combo >= 10) {
+
     combo = 0;
     life++;
+
     alert("ライフ回復！");
+
   }
 
   updateUI();
 
   if (score >= 20) {
+
     alert("ゲームクリア！");
+
     createStartScreen();
+
     return;
   }
 
@@ -163,7 +246,10 @@ function miss() {
 
   if (gameOver) return;
 
+  clearInterval(countdownInterval);
+
   combo = 0;
+
   life--;
 
   updateUI();
@@ -174,8 +260,13 @@ function miss() {
 
     gameArea.innerHTML = `
       <div id="gameOverScreen">
+
         <h1>ゲームオーバー</h1>
-        <p>スペースキーで再スタート</p>
+
+        <p>
+          スペースキーで再スタート
+        </p>
+
       </div>
     `;
 
@@ -192,9 +283,13 @@ function checkAnswer() {
   const userAnswer = answerInput.value.trim();
 
   if (userAnswer === currentWord) {
+
     correct();
+
   } else {
+
     miss();
+
   }
 
   answerInput.value = "";
@@ -205,7 +300,9 @@ submitBtn.addEventListener("click", checkAnswer);
 answerInput.addEventListener("keydown", (e) => {
 
   if (e.key === "Enter") {
+
     checkAnswer();
+
   }
 
 });
@@ -213,7 +310,9 @@ answerInput.addEventListener("keydown", (e) => {
 window.addEventListener("keydown", (e) => {
 
   if (gameOver && e.code === "Space") {
+
     createStartScreen();
+
   }
 
 });
