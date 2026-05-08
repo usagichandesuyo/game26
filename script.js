@@ -164,6 +164,8 @@ function startGame(level) {
 
   train = document.getElementById("train");
 
+  answerInput.value = "";
+
   startRound();
 }
 
@@ -298,7 +300,7 @@ function miss() {
   startRound();
 }
 
-answerInput.addEventListener("input", () => {
+function checkAnswer() {
 
   if (gameOver) return;
 
@@ -307,6 +309,20 @@ answerInput.addEventListener("input", () => {
   if (userAnswer === currentWord) {
 
     correct();
+
+  } else {
+
+    miss();
+
+  }
+
+}
+
+answerInput.addEventListener("keydown", (e) => {
+
+  if (e.key === "Enter") {
+
+    checkAnswer();
 
   }
 
