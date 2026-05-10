@@ -174,9 +174,13 @@ function startRound() {
 
   currentWord = getRandomWord();
 
-  train.textContent = currentWord;
+  train.innerHTML = `
+    <span class="trainText">
+      ${currentWord}
+    </span>
+  `;
 
-  let position = -100;
+  let position = -120;
 
   remainingTime = answerTimeLimit;
 
