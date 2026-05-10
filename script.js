@@ -85,7 +85,6 @@ function updateUI() {
   document.getElementById("combo").textContent = combo;
   document.getElementById("life").textContent = life;
   document.getElementById("timer").textContent = remainingTime;
-
 }
 
 function createStartScreen() {
@@ -120,7 +119,6 @@ function startGame(level) {
     selectedWords = easyWords;
     speed = 4;
     answerTimeLimit = 7;
-
   }
 
   if (level === "normal") {
@@ -128,7 +126,6 @@ function startGame(level) {
     selectedWords = normalWords;
     speed = 7;
     answerTimeLimit = 6;
-
   }
 
   if (level === "hard") {
@@ -136,7 +133,6 @@ function startGame(level) {
     selectedWords = hardWords;
     speed = 10;
     answerTimeLimit = 5;
-
   }
 
   score = 0;
@@ -163,7 +159,6 @@ function getRandomWord() {
   return selectedWords[
     Math.floor(Math.random() * selectedWords.length)
   ];
-
 }
 
 function startRound() {
@@ -178,9 +173,11 @@ function startRound() {
     <span class="trainText">
       ${currentWord}
     </span>
+
+    <div class="line"></div>
   `;
 
-  let position = -120;
+  let position = -250;
 
   remainingTime = answerTimeLimit;
 
@@ -216,7 +213,6 @@ function startRound() {
         miss();
 
       }, answerTimeLimit * 1000);
-
     }
 
   }, 20);
@@ -238,7 +234,6 @@ function correct() {
     life++;
 
     alert("ライフ回復！");
-
   }
 
   updateUI();
@@ -306,9 +301,7 @@ function checkAnswer() {
   } else {
 
     miss();
-
   }
-
 }
 
 answerInput.addEventListener("keydown", (e) => {
@@ -316,9 +309,7 @@ answerInput.addEventListener("keydown", (e) => {
   if (e.key === "Enter") {
 
     checkAnswer();
-
   }
-
 });
 
 window.addEventListener("keydown", (e) => {
@@ -326,9 +317,7 @@ window.addEventListener("keydown", (e) => {
   if (gameOver && e.code === "Space") {
 
     createStartScreen();
-
   }
-
 });
 
 createStartScreen();
