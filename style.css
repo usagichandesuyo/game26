@@ -1,8 +1,11 @@
 body {
   margin: 0;
   padding: 20px;
+
   text-align: center;
+
   font-family: sans-serif;
+
   background: #dfe6ee;
 }
 
@@ -12,16 +15,22 @@ h1 {
 
 .info {
   display: flex;
+
   justify-content: center;
+
   gap: 30px;
+
   margin-bottom: 20px;
+
   font-size: 24px;
+
   flex-wrap: wrap;
 }
 
 #gameArea {
   width: 90%;
   max-width: 1000px;
+
   height: 250px;
 
   margin: auto;
@@ -29,6 +38,7 @@ h1 {
   background: white;
 
   border: 5px solid black;
+
   border-radius: 20px;
 
   position: relative;
@@ -36,83 +46,89 @@ h1 {
   overflow: hidden;
 }
 
+/* 新幹線 */
 #train {
   position: absolute;
 
   top: 80px;
-  left: -100px;
+  left: -120px;
 
-  width: 260px;
-  height: 80px;
+  width: 320px;
+  height: 90px;
 
-  background: linear-gradient(
-    to right,
-    #0080ff 0%,
-    #4da6ff 100%
-  );
+  background: #0080ff;
 
-  border-radius: 40px 20px 20px 40px;
+  border: 5px solid #004080;
 
-  border: 4px solid #004080;
+  border-radius: 45px;
 
   color: white;
 
-  font-size: 28px;
+  font-size: 30px;
   font-weight: bold;
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  text-align: center;
+  line-height: 90px;
 
   white-space: nowrap;
 
-  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  box-shadow: 0 5px 10px rgba(0,0,0,0.3);
+
+  overflow: hidden;
 }
 
-/* 新幹線の窓 */
+/* 窓 */
 #train::before {
+
   content: "";
 
   position: absolute;
 
-  top: 15px;
-  left: 70px;
+  top: 18px;
+  left: 80px;
 
-  width: 140px;
-  height: 18px;
+  width: 180px;
+  height: 20px;
 
   background: white;
 
   border-radius: 10px;
 }
 
-/* 先頭部分 */
+/* 下ライン */
 #train::after {
+
   content: "";
 
   position: absolute;
 
-  left: -40px;
-  top: 0;
+  bottom: 10px;
+  left: 50px;
 
-  width: 80px;
-  height: 80px;
+  width: 220px;
+  height: 8px;
 
-  background: #0080ff;
+  background: #003366;
 
-  border-radius: 50% 0 0 50%;
+  border-radius: 10px;
+}
 
-  border-left: 4px solid #004080;
-  border-top: 4px solid #004080;
-  border-bottom: 4px solid #004080;
+/* 文字 */
+.trainText {
+
+  position: relative;
+
+  z-index: 10;
 }
 
 #startScreen,
 #gameOverScreen {
+
   margin-top: 60px;
 }
 
 #startScreen button {
+
   margin: 10px;
 
   padding: 15px 30px;
@@ -123,6 +139,7 @@ h1 {
 }
 
 input {
+
   margin-top: 20px;
 
   padding: 10px;
